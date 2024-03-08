@@ -1,12 +1,112 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Hello World!</title>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contract Form</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+<div id="contractForm" class="form-container">
+    <div class="flex-row">
+        <div class="flex-column">
+            <label for="dateField">Data de azi:</label>
+            <input type="text" id="dateField" name="date" placeholder="Date" readonly>
 
-  </head>
-  <body>
-    <h1>💖 Hello World!</h1>
-    <p>Welcome to your Electron application.</p>
-  </body>
+            <label for="idField">Numar:</label>
+            <input type="text" id="idField" name="id" placeholder="ID">
+        </div>
+        <div class="flex-column">
+            <label for="societateField">Societate:</label>
+            <input type="text" id="societateField" name="societate" placeholder="Societate">
+
+            <label for="adresaField">Adresa:</label>
+            <input type="text" id="adresaField" name="adresa" placeholder="Adresa">
+        </div>
+        <div class="flex-column">
+
+            <label for="numarOrcField">Numar ORC:</label>
+            <input type="text" id="numarOrcField" name="numarOrc" placeholder="Numar ORC">
+
+            <label for="codFiscalField">Cod Fiscal:</label>
+            <input type="text" id="codFiscalField" name="codFiscal" placeholder="Cod Fiscal">
+
+            <label for="reprezentantField">Reprezentant:</label>
+            <input type="text" id="reprezentantField" name="reprezentant" placeholder="Reprezentant">
+        </div>
+    </div>
+
+    <div class="items-table">
+        <div class="table-row header">
+            <div>Model</div>
+            <div>Serie</div>
+            <div>Loc Amplasare</div>
+        </div>
+        <!-- Populate this section dynamically if possible, here's an example for one row -->
+        <!-- Repeat for each item -->
+        <div class="table-row">
+            <div>
+                <label for="model1">Casa 1:</label>
+                <select class="model" id="model1" name="model1">
+                </select>
+            </div>
+            <div><input type="text" id="serie1" name="serie1" placeholder="Serie"></div>
+            <div><input type="text" id="loc1" name="loc1" placeholder="Loc Amplasare"></div>
+        </div>
+        <div class="table-row">
+            <div>
+                <label for="model2">Casa 2:</label>
+                <select class="model" id="model2" name="model2">
+                </select>
+            </div>
+            <div><input type="text" id="serie2" name="serie2" placeholder="Serie"></div>
+            <div><input type="text" id="loc2" name="loc2" placeholder="Loc Amplasare"></div>
+        </div>
+        <div class="table-row">
+            <div>
+                <label for="model3">Casa 3:</label>
+                <select class="model" id="model3" name="model3">
+                </select>
+            </div>
+            <div><input type="text" id="serie3" name="serie3" placeholder="Serie"></div>
+            <div><input type="text" id="loc3" name="loc3" placeholder="Loc Amplasare"></div>
+        </div>
+        <div class="table-row">
+            <div>
+                <label for="model4">Casa 1:</label>
+                <select class="model" id="model4" name="model4">
+                </select>
+            </div>
+            <div><input type="text" id="serie4" name="serie4" placeholder="Serie"></div>
+            <div><input type="text" id="loc4" name="loc4" placeholder="Loc Amplasare"></div>
+        </div>
+        <div class="table-row">
+            <div>
+                <label for="model5">Casa 1:</label>
+                <select class="model" id="model5" name="model5">
+
+                </select>
+            </div>
+            <div><input type="text" id="serie5" name="serie5" placeholder="Serie"></div>
+            <div><input type="text" id="loc5" name="loc5" placeholder="Loc Amplasare"></div>
+        </div>
+        <!-- End item example -->
+    </div>
+
+    <div class="flex-row">
+        <label for="costServiceField">Cost service:</label>
+        <input type="text" id="costServiceField" name="costService" placeholder="Cost service">
+
+        <label for="costInternetField">Cost internet - cartela:</label>
+        <input type="text" id="costInternetField" name="costInternet" placeholder="Cost internet - cartela">
+    </div>
+
+    <label for="totalCtrField">Total CTR/AA:</label>
+    <input type="text" id="totalCtrField" name="totalCtr" placeholder="Total CTR/AA" readonly>
+
+    <button id="generateContractBtn">Genereaza contractul</button>
+</div>
+
+<script src="app.js"></script>
+</body>
 </html>

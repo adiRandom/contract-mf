@@ -15,13 +15,15 @@ import * as fs from "fs/promises";
 import {Contract, Field} from "../model/contract";
 import {Sale} from "../model/sale";
 
-export async function generateContract(contract: Contract) {
+export async function generateContract(contract: Contract, savePath: string) {
     console.log(__dirname)
     const template = await fs.readFile(path.join(__dirname, "template.docx"));
     const patches: Record<string, IPatch> = {};
 
     for (const key in contract) {
         const indexKey = key as keyof Contract;
+
+        console.log(key)
 
         if (Array.isArray(contract[indexKey])) {
             patches[key] = getPatchForTable(contract[indexKey] as Array<Sale>);
@@ -34,13 +36,15 @@ export async function generateContract(contract: Contract) {
         patches: patches
     });
 
-    await fs.writeFile(path.join(__dirname, `${contract.contract_number.value}.docx`), doc);
+    await fs.writeFile(path.join(savePath, `${contract.contract_number.value}.docx`), doc);
 }
 
 
 type PatchableField = Field<string> | Field<number> | Field<Date>;
 
 function getPatch(field: PatchableField): IPatch {
+    console.log(field)
+
     let value: string
     if (typeof field.value === "string") {
         value = field.value;
@@ -68,6 +72,7 @@ function formatDate(date: Date): string {
 }
 
 function getPatchForTable(sales: Array<Sale>): IPatch {
+    console.log("table")
     const headerRow = new TableRow({
         height:{
             value: 600,
