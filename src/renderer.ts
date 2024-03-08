@@ -3,15 +3,15 @@ import {Sale} from "./model/sale";
 import {Contract} from "./model/contract";
 
 const UNSELECTED = "Neselectat"
-const mockOptions = [UNSELECTED, "Model1", "Model2"]
 
 let servicePrice = 0;
 let subPrice = 0;
 
-function loadOptions() {
-    console.log('hey')
+function loadOptions(options: string[]){
+    const optionsWithUnselected = [UNSELECTED, ...options]
+
     document.querySelectorAll(".model").forEach((el) => {
-        el.innerHTML = mockOptions.map((opt) => `<option value="${opt}">${opt}</option>`).join('')
+        el.innerHTML = optionsWithUnselected.map((opt) => `<option value="${opt}">${opt}</option>`).join('')
     })
 }
 
@@ -79,7 +79,7 @@ function createContract() {
 function main() {
     // document.onload = loadOptions
     document.addEventListener("DOMContentLoaded", () => {
-        loadOptions()
+        (window as any).electronAPI.loadItems()
         loadDate()
     })
 
@@ -96,7 +96,10 @@ function main() {
 
     document.querySelector("#generateContractBtn").addEventListener("click", () => {
         createContract()
-    })
+    });
+
+    (window as any).electronAPI.onRefreshItems();
+    (window as any).electronAPI.onItemsLoaded(loadOptions)
 }
 
 main()

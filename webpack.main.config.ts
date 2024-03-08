@@ -16,7 +16,8 @@ export const mainConfig: Configuration = {
     },
     plugins: [...plugins, new CopyPlugin({
         patterns: [
-            {from: "src/assets", to: ""}
+            {from: "src/assets", to: ""},
+            {from: "src/list.html", to: ""},
         ]
     })],
     resolve: {

@@ -6,5 +6,12 @@ import {Contract} from "./model/contract";
 import {contextBridge, ipcRenderer} from "electron"
 
 contextBridge.exposeInMainWorld('electronAPI', {
-    createContract: (contract: Contract) => ipcRenderer.send('createContract', contract)
+    createContract: (contract: Contract) => ipcRenderer.send('createContract', contract),
+    onItemsLoaded: (cb: (items: string[]) => void) => ipcRenderer.on('load-items-reply', (event, loadedItems) => {
+        cb(loadedItems)
+    }),
+    onRefreshItems: () => ipcRenderer.on('refresh-items', () => {
+        ipcRenderer.send('load-items')
+    }),
+    loadItems: () => ipcRenderer.send('load-items'),
 })
