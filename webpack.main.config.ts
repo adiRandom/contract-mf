@@ -18,6 +18,7 @@ export const mainConfig: Configuration = {
         patterns: [
             {from: "src/assets", to: ""},
             {from: "src/list.html", to: ""},
+            {from: "src/captcha.html", to: ""},
         ]
     })],
     resolve: {

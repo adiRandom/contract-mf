@@ -1,6 +1,6 @@
 import "./index.css"
 import {Sale} from "./model/sale";
-import {Contract} from "./model/contract";
+import {Contract, CrawlResult} from "./model/contract";
 
 const UNSELECTED = "Neselectat"
 
@@ -100,6 +100,17 @@ function main() {
 
     (window as any).electronAPI.onRefreshItems();
     (window as any).electronAPI.onItemsLoaded(loadOptions)
+
+    document.querySelector("#crawlBtn").addEventListener("click", () => {
+        const code = document.querySelector<HTMLInputElement>("#codFiscalField").value;
+        (window as any).electronAPI.crawl(code)
+    });
+
+    (window as any).electronAPI.onCrawlResult((result: CrawlResult) => {
+        document.querySelector<HTMLInputElement>("#societateField").value = result.company_name
+        document.querySelector<HTMLInputElement>("#adresaField").value = result.company_address
+        document.querySelector<HTMLInputElement>("#numarOrcField").value = result.company_j
+    })
 }
 
 main()

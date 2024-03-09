@@ -59,3 +59,10 @@ export type Field<T extends string | number | Date> = {
     isBold: boolean;
     fontSize: number
 }
+
+export type CrawlResult = {
+    company_name: string;
+    company_address: string;
+    company_code: string;
+    company_j: string;
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Captcha</title>
+</head>
+<body>
+    <div id="captchaForm" class="form-container">
+        <div class="flex-row">
+            <div class="flex-column">
+                <label for="captchaField">Captcha:</label>
+                <input type="text" id="captchaField" name="captcha" placeholder="Captcha">
+            </div>
+            <div class="flex-column">
+                <img src="captcha.php" alt="Captcha">
+            </div>
+            <button id="submitCaptcha">Submit</button>
+        </div>
+    </div>
+    <script>
+        window.electronAPI.onCaptcha((captcha) => {
+            console.log(captcha)
+           document.querySelector('img').src = `data:image/png;base64,${captcha}`
+        })
+
+        document.getElementById('submitCaptcha').addEventListener('click', () => {
+            const captcha = document.getElementById('captchaField').value
+            window.electronAPI.submitCaptcha(captcha)
+        })
+    </script>
+</body>
+</html>
