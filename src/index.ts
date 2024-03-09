@@ -40,7 +40,18 @@ const mainMenu = Menu.buildFromTemplate([
                 }
             }
         ]
-    }
+    },
+    {
+        label: "Edit",
+        submenu: [
+            { label: "Undo", accelerator: "CmdOrCtrl+Z", role: "undo" },
+            { label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", role: "redo" },
+            { type: "separator" },
+            { label: "Cut", accelerator: "CmdOrCtrl+X", role: "cut" },
+            { label: "Copy", accelerator: "CmdOrCtrl+C", role: "copy" },
+            { label: "Paste", accelerator: "CmdOrCtrl+V", role: "paste" },
+            { label: "Select All", accelerator: "CmdOrCtrl+A", role: "selectAll" }
+        ]}
     // Add other menu items as needed
 ]);
 
@@ -56,6 +67,7 @@ const createWindow = (): void => {
 
     // and load the index.html of the app.
     mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+    mainWindow.webContents.openDevTools()
 
     Menu.setApplicationMenu(mainMenu);
 };
@@ -185,18 +197,25 @@ async function crawlMf(code: string) {
 
 
 async function crawlData(code: string, page: Page): Promise<CrawlResult> {
-    const companyName = await page.$eval('.row:nth-of-type(1) div', (el) => el.innerHTML);
-    const companyIncompleteAddress = await page.$eval('.row:nth-of-type(2) div', (el) => el.innerHTML);
-    const companyCity = await page.$eval('.row:nth-of-type(3) div', (el) => el.innerHTML);
+    const companyName = await page.$eval('.row:nth-of-type(1) div:nth-of-type(2)', (el) => el.innerHTML);
+    const companyIncompleteAddress = await page.$eval('.row:nth-of-type(2) div:nth-of-type(2)', (el) => el.innerHTML);
+    const companyCity = await page.$eval('.row:nth-of-type(3) div:nth-of-type(2)', (el) => el.innerHTML);
     const companyAddress = companyIncompleteAddress + " " + companyCity;
-    const companyJ = await page.$eval('.row:nth-of-type(4) div', (el) => el.innerHTML);
+    const companyJ = await page.$eval('.row:nth-of-type(4) div:nth-of-type(2)', (el) => el.innerHTML);
 
     return {
-        company_name: companyName,
-        company_address: companyAddress,
-        company_j: companyJ,
+        company_name: sanitize(companyName),
+        company_address: sanitize(companyAddress),
+        company_j: sanitize(companyJ),
         company_code: code
     } as CrawlResult
+}
+
+function sanitize(str: string) {
+    return str.replace(/[\n\r\t]/g, '')
+        .replace(/&nbsp;/g, ' ')
+        .replace(/ +/g, ' ')
+        .trim()
 }
 
 function openWindowForCapthcaSolver() {

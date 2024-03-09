@@ -107,6 +107,7 @@ function main() {
     });
 
     (window as any).electronAPI.onCrawlResult((result: CrawlResult) => {
+        console.log(result)
         document.querySelector<HTMLInputElement>("#societateField").value = result.company_name
         document.querySelector<HTMLInputElement>("#adresaField").value = result.company_address
         document.querySelector<HTMLInputElement>("#numarOrcField").value = result.company_j
