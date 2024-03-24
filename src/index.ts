@@ -127,7 +127,7 @@ async function createContract(event: any, contract: Contract) {
     const dialogResult = await dialog.showOpenDialog({properties: ['openDirectory']})
 
     if (dialogResult.canceled === false) {
-        await generateContract(contract, dialogResult.filePaths[0])
+        generateContract(contract, dialogResult.filePaths[0])
     }
 }
 
