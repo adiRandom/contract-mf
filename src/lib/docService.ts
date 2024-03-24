@@ -3,6 +3,8 @@ import * as fs from "fs";
 import {Contract} from "../model/contract";
 import PizZip from "pizzip";
 import Docxtemplater from "docxtemplater";
+import open from 'open';
+
 
 function openTemplate() {
     const template = fs.readFileSync(path.join(__dirname, "template.docx"), "binary");
@@ -13,7 +15,7 @@ function openTemplate() {
     });
 }
 
-export function generateContract(contract: Contract, savePath: string) {
+export function generateContractAndOpen(contract: Contract, savePath: string) {
     const template = openTemplate();
     template.render({
         ...contract,
@@ -21,7 +23,12 @@ export function generateContract(contract: Contract, savePath: string) {
     })
 
     const buf = template.getZip().generate({type: "nodebuffer", compression: "DEFLATE"});
-    fs.writeFileSync(path.resolve(savePath, `${contract.contract_number}.docx`), buf);
+    const outPath = path.resolve(savePath, `${contract.contract_number}.docx`);
+
+
+    fs.writeFileSync(path.resolve(savePath, outPath), buf);
+
+    open(path.resolve(savePath, outPath));
 }
 
 

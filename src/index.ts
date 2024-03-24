@@ -1,5 +1,5 @@
 import {app, BrowserWindow, dialog, ipcMain, Menu} from 'electron';
-import {generateContract} from "./lib/docService";
+import {generateContractAndOpen} from "./lib/docService";
 import {Contract, CrawlResult} from "./model/contract";
 import * as fs from "fs";
 import * as path from "path";
@@ -127,7 +127,7 @@ async function createContract(event: any, contract: Contract) {
     const dialogResult = await dialog.showOpenDialog({properties: ['openDirectory']})
 
     if (dialogResult.canceled === false) {
-        generateContract(contract, dialogResult.filePaths[0])
+        generateContractAndOpen(contract, dialogResult.filePaths[0])
     }
 }
 
